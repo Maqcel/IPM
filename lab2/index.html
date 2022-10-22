@@ -24,8 +24,17 @@
             <label for="idNumber">Id number: </label>
             <input pattern="[A-Z]{3} [0-9]{6}" id="idNumber" name="idNumber" placeholder="FDS 231333" required>
         </div><br />
-        <input type="url" pattern="https?://.+" placeholder="Przykładowa strona: https://example.com" required><br><br>
-        <input type="tel" placeholder="Numer telefonu np: 601-102-203" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required />
+        <div>
+            <label for="url">Web page: </label>
+            <input
+                pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"
+                id="url" name="url" placeholder="https://example.com" required>
+        </div><br />
+        <div>
+            <label for="phoneNumber">Phone number: </label>
+            <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" id="phoneNumber" name="phoneNumber" placeholder="601-102-203"
+                required>
+        </div><br />
     </form>
 </body>
 
