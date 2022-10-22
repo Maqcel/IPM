@@ -1,11 +1,7 @@
-input:valid {
-    border-color: green;
-}
-
 input:invalid {
-    border-color: red;
+    border: 2px solid #FF0000;
 }
 
-input:focus:invalid {
-    outline: none;
+input:valid {
+    border: 2px solid #00cc00;
 }
