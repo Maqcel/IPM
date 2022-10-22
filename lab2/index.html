@@ -15,6 +15,11 @@
             <label for="postalCode">Enter postal code: </label>
             <input pattern="[0-9]{2}-[0-9]{3}" id="postalCode" name="postalCode" placeholder="97-300" required>
         </div><br />
+        <div>
+            <label for="nip">Enter NIP:</label>
+            <input pattern="([0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2})|([0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3})" id="nip"
+                name="nip" placeholder="123-456-78-19" required>
+        </div><br />
         <input type="text" pattern="([0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2})|([0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{3})"
             placeholder="Numer NIP np: 123-456-78-19" required><br><br>
         <input type="text" pattern="[A-Z]{3} [0-9]{6}" placeholder="Numer dowodu np: FDS 231333" required><br><br>
