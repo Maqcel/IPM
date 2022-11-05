@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    let items = document.querySelectorAll('.container .box');
+    let items = document.querySelectorAll('.zad1 .box');
     items.forEach(function (item) {
         item.addEventListener('dragstart', handleDragStart);
         item.addEventListener('dragend', handleDragEnd);
