@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
+    position: relative;
 }
 
 .box {
@@ -16,11 +17,14 @@
     border: 3px dotted red;
 }
 
-.button {
-    text-align: center;
-    font-size: 32px;
-    border: 3px solid green;
-    background-color: greenyellow;
-    border-radius: .5em;
-    padding: 10px;
+#myCanvas {
+    height: 90%;
+    position: absolute;
+    width: 80%;
+}
+
+#create {
+    position: absolute;
+    width: 20%;
+    height: 90%;
 }
