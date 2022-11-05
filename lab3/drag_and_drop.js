@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    var dragSrcEl = null;
 
     function handleDragStart(e) {
         this.style.opacity = '0.4';
+
+        dragSrcEl = this;
     }
 
     function handleDragEnd(e) {
