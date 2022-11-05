@@ -17,14 +17,14 @@
     border: 3px dotted red;
 }
 
-#myCanvas {
-    height: 90%;
+#canva {
+    border: 3px solid green;
+    height: 60%;
     position: absolute;
     width: 80%;
 }
 
 #create {
     position: absolute;
-    width: 20%;
-    height: 90%;
+    width: 80%;
 }
