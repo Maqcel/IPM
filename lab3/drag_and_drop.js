@@ -34,6 +34,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         this.classList.remove('over');
     }
 
+    function handleDrop(e) {
+        if (dragSrcEl != this) {
+            dragSrcEl.innerHTML = this.innerHTML;
+            this.innerHTML = e.dataTransfer.getData('text/html');
+        }
+    }
+
     let items = document.querySelectorAll('.container .box');
     items.forEach(function (item) {
         item.addEventListener('dragstart', handleDragStart);
@@ -41,5 +48,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         item.addEventListener('dragover', handleDragOver);
         item.addEventListener('dragenter', handleDragEnter);
         item.addEventListener('dragleave', handleDragLeave);
+        item.addEventListener('drop', handleDrop);
     });
 });
