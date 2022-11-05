@@ -11,3 +11,7 @@
     padding: 10px;
     cursor: move;
 }
+
+.box.over {
+    border: 3px dotted red;
+}
