@@ -50,4 +50,73 @@ document.addEventListener('DOMContentLoaded', (event) => {
         item.addEventListener('dragleave', handleDragLeave);
         item.addEventListener('drop', handleDrop);
     });
+
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    var stage = new Konva.Stage({
+        container: 'canva',
+        width: width,
+        height: height,
+        margin: 0,
+    });
+
+    var layer = new Konva.Layer();
+    var rectX = stage.width() / 2 - 50;
+    var rectY = stage.height() / 2 - 25;
+
+    var box = new Konva.Rect();
+
+    var layer = new Konva.Layer();
+    stage.add(layer);
+
+    var tr = new Konva.Transformer();
+    layer.add(tr);
+    layer.draw();
+    layer.add(box);
+
+    document.getElementById('create').addEventListener('click', addShape);
+    addShape();
+
+    function addShape() {
+        var random = Math.floor(Math.random() * 3);
+        if (random == 0) {
+            layer.add(
+                new Konva.RegularPolygon({
+                    x: 100,
+                    y: 150,
+                    sides: 3,
+                    radius: 70,
+                    fill: Konva.Util.getRandomColor(),
+                    draggable: true,
+                }),
+            );
+        }
+        else if (random == 1) {
+            layer.add(
+                new Konva.Circle({
+                    x: Math.random() * 100 + 100,
+                    y: Math.random() * 100 + 100,
+                    radius: 70,
+                    fill: Konva.Util.getRandomColor(),
+                    draggable: true,
+                }),
+            );
+        }
+        else if (random == 2) {
+            layer.add(
+                new Konva.Rect({
+                    x: Math.random() * 10,
+                    y: Math.random() * 10,
+                    width: 200,
+                    height: 200,
+                    fill: Konva.Util.getRandomColor(),
+                    draggable: true,
+                })
+            );
+        }
+
+        tr.forceUpdate();
+        layer.draw();
+    }
 });
