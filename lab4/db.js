@@ -10,10 +10,15 @@ dbReq.onupgradeneeded = function (event) {
     } else {
         clients = dbReq.transaction.objectStore('clients');
     }
+
+    if (!clients.indexNames.contains('timestamp')) {
+        clients.createIndex('timestamp', 'timestamp');
+    }
 }
 dbReq.onsuccess = function (event) {
     console.log('Creation success')
     db = event.target.result;
+    getCustomers(db)
 }
 dbReq.onerror = function (event) {
     console.log('Creation error')
@@ -36,12 +41,15 @@ function addCustomer(db, firstName, lastName, age) {
     let transaction = db.transaction(['clients'], 'readwrite');
     let store = transaction.objectStore('clients');
 
-    let customer = { firstName: firstName, lastName: lastName, age: age };
+    let customer = { firstName: firstName, lastName: lastName, age: age, timestamp: Date.now() };
     store.add(customer);
 
     // Success
     transaction.oncomplete = function () {
         console.log('Customer: ', firstName, ' ', lastName, ' aged: ', age, ' added\n')
+
+        // Just add this customer for view
+        displayCustomers([customer]);
     }
 
     // Failed
@@ -50,15 +58,38 @@ function addCustomer(db, firstName, lastName, age) {
     }
 }
 
-function displayCustomers(clients) {
-    let clientTile = '<ul>';
+function getCustomers(db) {
+    let transaction = db.transaction(['clients'], 'readonly');
+    let store = transaction.objectStore('clients');
 
-    for (let i = 0; i < clients.length; i++) {
-        const element = clients[i];
-        clientTile += '<li>'
-        clientTile += _.escape(`${element.firstName} ${element.lastName} ${element.age}`);
-        clientTile += '</li>';
+    let index = store.index('timestamp');
+
+    let getRequest = index.openCursor(null, 'next');
+    let allClients = [];
+
+    getRequest.onsuccess = function (event) {
+        let cursor = event.target.result;
+        if (cursor != null) {
+            allClients.push(cursor.value);
+
+            cursor.continue();
+        } else {
+            console.log('Should display: ', allClients.length)
+            displayCustomers(allClients);
+        }
     }
 
-    document.getElementById('customers').clientTile = clientTile;
+    getRequest.onerror = function (event) {
+        alert('Error in get request ' + event.target.errorCode);
+    }
+}
+
+function displayCustomers(clients) {
+    let customerList = document.getElementById('customers');
+
+    clients.forEach((element) => {
+        let clientTile = document.createElement("li");
+        clientTile.innerText = `Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
+        customerList.appendChild(clientTile);
+    })
 }
