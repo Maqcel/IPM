@@ -74,7 +74,6 @@ function getCustomers(db) {
 
             cursor.continue();
         } else {
-            console.log('Should display: ', allClients.length)
             displayCustomers(allClients);
         }
     }
@@ -88,8 +87,17 @@ function displayCustomers(clients) {
     let customerList = document.getElementById('customers');
 
     clients.forEach((element) => {
-        let clientTile = document.createElement("li");
-        clientTile.innerText = `Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
+        let clientTile = document.createElement("button");
+        clientTile.innerText = `Delete Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
+
+        clientTile.addEventListener('click', function handleClick(_) {
+            deleteCustomer(element);
+        });
+
         customerList.appendChild(clientTile);
     })
+}
+
+function deleteCustomer(client) {
+    console.log(client.firstName);
 }
