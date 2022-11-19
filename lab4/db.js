@@ -9,12 +9,22 @@ dbReq.onupgradeneeded = function (event) {
 dbReq.onsuccess = function (event) {
     console.log('Creation success')
     db = event.target.result;
-
-    addCustomer(db, 'Marcin', 'Testowy', 17)
 }
 dbReq.onerror = function (event) {
     console.log('Creation error')
     alert('error opening database ' + event.target.errorCode);
+}
+
+function submitCustomerFromButton() {
+    let firstName = document.getElementById('firstName');
+    let lastName = document.getElementById('lastName');
+    let age = document.getElementById('clientAge');
+
+    addCustomer(db, firstName.value, lastName.value, age.value)
+
+    firstName.value = '';
+    lastName.value = '';
+    age.value = '';
 }
 
 function addCustomer(db, firstName, lastName, age) {

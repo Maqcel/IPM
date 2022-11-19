@@ -9,9 +9,11 @@
     <div id="app">
         <form>
             <div id="form">
-                <input type="text" placeholder="Client name" required>
-                <input type="text" placeholder="Client last name" required>
-                <input type="number" placeholder="Client age" required>
+                <input type="text" id="firstName" placeholder="Client name" required>
+                <input type="text" id="lastName" placeholder="Client last name" required>
+                <input type="number" id="clientAge" placeholder="Client age" required>
+                <br><br>
+                <button onclick="submitCustomerFromButton()">Add Customer</button>
             </div>
         </form>
         <div id="customers"></div>
