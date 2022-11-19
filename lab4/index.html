@@ -7,9 +7,13 @@
 
 <body>
     <div id="app">
-        <div id="textbox">
-            <textarea id="newCustomer"></textarea>
-        </div>
+        <form>
+            <div id="form">
+                <input type="text" placeholder="Client name" required>
+                <input type="text" placeholder="Client last name" required>
+                <input type="number" placeholder="Client age" required>
+            </div>
+        </form>
         <div id="customers"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
