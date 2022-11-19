@@ -4,7 +4,12 @@ let dbReq = indexedDB.open('myDatabase', 2);
 dbReq.onupgradeneeded = function (event) {
     db = event.target.result;
 
-    let clients = db.createObjectStore('clients', { autoIncrement: true });
+    let clients;
+    if (!db.objectStoreNames.contains('clients')) {
+        clients = db.createObjectStore('clients', { autoIncrement: true });
+    } else {
+        clients = dbReq.transaction.objectStore('clients');
+    }
 }
 dbReq.onsuccess = function (event) {
     console.log('Creation success')
@@ -43,4 +48,17 @@ function addCustomer(db, firstName, lastName, age) {
     transaction.onerror = function (event) {
         alert('Error adding customer: ' + event.target.errorCode);
     }
+}
+
+function displayCustomers(clients) {
+    let clientTile = '<ul>';
+
+    for (let i = 0; i < clients.length; i++) {
+        const element = clients[i];
+        clientTile += '<li>'
+        clientTile += _.escape(`${element.firstName} ${element.lastName} ${element.age}`);
+        clientTile += '</li>';
+    }
+
+    document.getElementById('customers').clientTile = clientTile;
 }
