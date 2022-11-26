@@ -99,17 +99,23 @@ function displayCustomers(clients) {
 }
 
 function deleteCustomer(client) {
-    console.log(client);
+    // console.log(client.timestamp);
 
     var transaction = db.transaction(["clients"], "readwrite");
     var store = transaction.objectStore("clients");
 
-    var request = store.delete(client);
+    var request = store.getKey(client.timestamp);
     request.onsuccess = function () {
-        console.log('customer ' + id + ' Deleted');
-    }
-    request.onerror = function (e) {
-        alert("Sorry, the customer was not removed");
-        console.log('Error', e.target.error.name);
-    }
+        let id = request.result;
+        console.log(id);
+        // let deleteRequest = books.delete(id);
+    };
+    // var request = store.delete(client);
+    // request.onsuccess = function () {
+    //     console.log('customer ' + id + ' Deleted');
+    // }
+    // request.onerror = function (e) {
+    //     alert("Sorry, the customer was not removed");
+    //     console.log('Error', e.target.error.name);
+    // }
 }
