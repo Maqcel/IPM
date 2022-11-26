@@ -91,7 +91,17 @@ function displayCustomers(clients) {
         clientTile.innerText = `Delete Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
 
         clientTile.addEventListener('click', function handleClick(_) {
-            deleteCustomer(element);
+            var transaction = db.transaction(["clients"], "readonly");
+            var store = transaction.objectStore("clients");
+            var index = store.index('firstName');
+            index.openCursor().onsuccess = function (e) {
+                var cursor = e.target.result;
+                if (cursor) {
+                    console.log(cursor.value.index);
+                    cursor.continue();
+                }
+            }
+            deleteCustomer(element.index);
         });
 
         customerList.appendChild(clientTile);
@@ -99,6 +109,7 @@ function displayCustomers(clients) {
 }
 
 function deleteCustomer(client) {
+    // console.log(client);
     const request = db.transaction(['clients'], 'readwrite')
         .objectStore('clients')
         .index('timestamp')
@@ -106,7 +117,7 @@ function deleteCustomer(client) {
     index.openCursor().onsuccess = function (e) {
         var cursor = e.target.result;
         if (cursor) {
-            console.log(cursor.value.id)
+            console.log(cursor.value)
             cursor.continue();
         }
     }
