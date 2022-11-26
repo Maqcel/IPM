@@ -104,18 +104,17 @@ function deleteCustomer(client) {
     var transaction = db.transaction(["clients"], "readwrite");
     var store = transaction.objectStore("clients");
 
-    var request = store.getKey(client.timestamp);
+    var request = store.openCursor();
     request.onsuccess = function () {
-        let id = request.result;
-        console.log(id);
-        // let deleteRequest = books.delete(id);
+        let cursor = request.result;
+        if (cursor) {
+            let key = cursor.key;
+            let value = cursor.value;
+            if (cursor.value.timestamp == client.timestamp) {
+                console.log(key, value);
+                store.delete(key);
+            }
+            cursor.continue();
+        }
     };
-    // var request = store.delete(client);
-    // request.onsuccess = function () {
-    //     console.log('customer ' + id + ' Deleted');
-    // }
-    // request.onerror = function (e) {
-    //     alert("Sorry, the customer was not removed");
-    //     console.log('Error', e.target.error.name);
-    // }
 }
