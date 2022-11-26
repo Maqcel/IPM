@@ -121,5 +121,10 @@ function deleteCustomer(client) {
 }
 
 function generateCustomer() {
+    let names = ['Marcin', 'Konrad', 'Franek', 'Magda', 'Arek'];
+    let lastName = ['Kowalski', 'Rembroski', 'Jokwolska', 'Janowicz', 'Lewandowski'];
 
+    document.getElementById('firstName').value = names[Math.random * names.length];
+    document.getElementById('lastName').value = lastName[Math.random * lastName.length];
+    // document.getElementById('clientAge').value = 21;
 }
