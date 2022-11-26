@@ -91,17 +91,7 @@ function displayCustomers(clients) {
         clientTile.innerText = `Delete Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
 
         clientTile.addEventListener('click', function handleClick(_) {
-            var transaction = db.transaction(["clients"], "readonly");
-            var store = transaction.objectStore("clients");
-            var index = store.index('firstName');
-            index.openCursor().onsuccess = function (e) {
-                var cursor = e.target.result;
-                if (cursor) {
-                    console.log(cursor.value.index);
-                    cursor.continue();
-                }
-            }
-            deleteCustomer(element.index);
+            deleteCustomer(element);
         });
 
         customerList.appendChild(clientTile);
@@ -109,24 +99,17 @@ function displayCustomers(clients) {
 }
 
 function deleteCustomer(client) {
-    // console.log(client);
-    const request = db.transaction(['clients'], 'readwrite')
-        .objectStore('clients')
-        .index('timestamp')
+    console.log(client);
 
-    index.openCursor().onsuccess = function (e) {
-        var cursor = e.target.result;
-        if (cursor) {
-            console.log(cursor.value)
-            cursor.continue();
-        }
+    var transaction = db.transaction(["clients"], "readwrite");
+    var store = transaction.objectStore("clients");
+
+    var request = store.delete(client);
+    request.onsuccess = function () {
+        console.log('customer ' + id + ' Deleted');
     }
-
-    // request.onsuccess = () => {
-    //     console.log(`Student deleted, email: ${request.result}`);
-    // }
-
-    // request.onerror = (err) => {
-    //     console.error(`Error to delete student: ${err}`)
-    // }
+    request.onerror = function (e) {
+        alert("Sorry, the customer was not removed");
+        console.log('Error', e.target.error.name);
+    }
 }
