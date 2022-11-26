@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+
+<body>
+    <div id="app">
+        <form>
+            <div id="form">
+                <input type="text" id="firstName" placeholder="Client name" required>
+                <input type="text" id="lastName" placeholder="Client last name" required>
+                <input type="number" id="clientAge" placeholder="Client age" required>
+                <br><br>
+                <button onclick="submitCustomerFromButton()">Add Customer</button>
+            </div>
+        </form>
+        <br><br>
+        <ul id="customers"></ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
+    <script src="db.js"></script>
+</body>
+
+</html>
