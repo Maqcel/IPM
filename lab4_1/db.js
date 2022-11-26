@@ -119,3 +119,7 @@ function deleteCustomer(client) {
         }
     };
 }
+
+function generateCustomer() {
+
+}
