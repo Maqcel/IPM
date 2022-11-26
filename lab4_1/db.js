@@ -99,18 +99,23 @@ function displayCustomers(clients) {
 }
 
 function deleteCustomer(client) {
-    // console.log(client.firstName);
+    const request = db.transaction(['clients'], 'readwrite')
+        .objectStore('clients')
+        .index('timestamp')
 
-    let transaction = db.transaction(['clients'], 'readwrite');
-    let store = transaction.objectStore('clients');
+    index.openCursor().onsuccess = function (e) {
+        var cursor = e.target.result;
+        if (cursor) {
+            console.log(cursor.value.id)
+            cursor.continue();
+        }
+    }
 
-    let request = store.index(client['timestamp'])
+    // request.onsuccess = () => {
+    //     console.log(`Student deleted, email: ${request.result}`);
+    // }
 
-    console.log(client.key);
-
-    request.onsuccess = function () {
-        let id = request.result;
-        console.log(id);
-        let deleteRequest = books.delete(id);
-    };
+    // request.onerror = (err) => {
+    //     console.error(`Error to delete student: ${err}`)
+    // }
 }
