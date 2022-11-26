@@ -124,7 +124,7 @@ function generateCustomer() {
     let names = ['Marcin', 'Konrad', 'Franek', 'Magda', 'Arek'];
     let lastName = ['Kowalski', 'Rembroski', 'Jokwolska', 'Janowicz', 'Lewandowski'];
 
-    document.getElementById('firstName').value = names[Math.random * names.length];
-    document.getElementById('lastName').value = lastName[Math.random * lastName.length];
-    // document.getElementById('clientAge').value = 21;
+    document.getElementById('firstName').value = names[Math.floor(Math.random() * names.length)];
+    document.getElementById('lastName').value = lastName[Math.floor(Math.random() * lastName.length)];
+    document.getElementById('clientAge').value = Math.floor(Math.random() * 100);
 }
