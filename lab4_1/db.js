@@ -88,6 +88,7 @@ function displayCustomers(clients) {
 
     clients.forEach((element) => {
         let clientTile = document.createElement("button");
+        clientTile.setAttribute('id', element.timestamp);
         clientTile.innerText = `Delete Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
 
         clientTile.addEventListener('click', function handleClick(_) {
@@ -95,12 +96,10 @@ function displayCustomers(clients) {
         });
 
         customerList.appendChild(clientTile);
-    })
+    });
 }
 
 function deleteCustomer(client) {
-    // console.log(client.timestamp);
-
     var transaction = db.transaction(["clients"], "readwrite");
     var store = transaction.objectStore("clients");
 
@@ -113,8 +112,10 @@ function deleteCustomer(client) {
             if (cursor.value.timestamp == client.timestamp) {
                 console.log(key, value);
                 store.delete(key);
+                document.getElementById(client.timestamp).remove();
+            } else {
+                cursor.continue();
             }
-            cursor.continue();
         }
     };
 }
