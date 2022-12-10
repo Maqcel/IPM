@@ -36,11 +36,16 @@ function submitCustomerFromButton() {
     } else {
         console.log('Creating customer');
         addCustomer(db, firstName.value, lastName.value, age.value)
-        firstName.value = '';
-        lastName.value = '';
-        age.value = '';
-        isEditMode = false;
     }
+
+    firstName.value = '';
+    lastName.value = '';
+    age.value = '';
+    isEditMode = false;
+}
+
+function editCustomer(db, firstName, lastName, age) {
+
 }
 
 function addCustomer(db, firstName, lastName, age) {
@@ -146,6 +151,13 @@ function editCustomerShowData(client) {
         if (cursor) {
             if (cursor.value.timestamp == client.timestamp) {
                 isEditMode = true;
+                let firstName = document.getElementById('firstName');
+                let lastName = document.getElementById('lastName');
+                let age = document.getElementById('clientAge');
+
+                firstName.value = client.firstName;
+                lastName.value = client.lastName;
+                age.value = client.age;
             } else {
                 cursor.continue();
             }
