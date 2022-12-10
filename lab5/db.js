@@ -47,10 +47,25 @@ function submitCustomerFromButton() {
 }
 
 function editCustomer(db, firstName, lastName, age) {
-    let transaction = db.transaction(['clients'], 'readwrite');
-    let store = transaction.objectStore('clients');
+    var transaction = db.transaction(["clients"], "readwrite");
+    var store = transaction.objectStore("clients");
 
-    store.delete(editedKey);
+    var request = store.openCursor();
+    request.onsuccess = function () {
+        let cursor = request.result;
+        if (cursor) {
+            if (cursor.key == editedKey) {
+                store.put({
+                    firstName: firstName,
+                    lastName: lastName,
+                    age: parseInt(age),
+                    timestamp: cursor.value.timestamp,
+                }, editedKey);
+            } else {
+                cursor.continue();
+            }
+        }
+    };
 }
 
 function addCustomer(db, firstName, lastName, age) {
