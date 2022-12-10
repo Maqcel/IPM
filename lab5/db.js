@@ -36,6 +36,7 @@ function submitCustomerFromButton() {
     firstName.value = '';
     lastName.value = '';
     age.value = '';
+    isEditMode = false;
 }
 
 function addCustomer(db, firstName, lastName, age) {
