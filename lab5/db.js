@@ -44,6 +44,7 @@ function submitCustomerFromButton() {
     lastName.value = '';
     age.value = '';
     isEditMode = false;
+    showClearButton();
     document.getElementById('submitButton').innerText = 'Add Customer';
 }
 
@@ -72,6 +73,9 @@ function editCustomer(db, firstName, lastName, age) {
 }
 
 function addCustomer(db, firstName, lastName, age) {
+    if (firstName === '' && lastName === '' && age === '') {
+        return;
+    }
     let transaction = db.transaction(['clients'], 'readwrite');
     let store = transaction.objectStore('clients');
 
@@ -178,6 +182,7 @@ function editCustomerShowData(client) {
         if (cursor) {
             if (cursor.value.timestamp == client.timestamp) {
                 isEditMode = true;
+                showClearButton();
                 editedKey = cursor.key;
                 let firstName = document.getElementById('firstName');
                 let lastName = document.getElementById('lastName');
@@ -200,4 +205,18 @@ function generateCustomer() {
     let lastName = ['Kowalski', 'Rembroski', 'Jokwolska', 'Janowicz', 'Lewandowski'];
 
     addCustomer(db, names[Math.floor(Math.random() * names.length)], lastName[Math.floor(Math.random() * lastName.length)], Math.floor(Math.random() * 100))
+}
+
+function showClearButton() {
+    let clearDiv = document.getElementById('cancelEdit');
+
+    if (isEditMode) {
+        let clearEdit = document.createElement("button");
+        clearEdit.setAttribute('id', cancelEdit);
+        clearEdit.innerText = 'Clear'
+        clearDiv.appendChild(clearEdit);
+    } else {
+        document.getElementById(cancelEdit)?.remove();
+        isEditMode = false;
+    }
 }
