@@ -1,6 +1,7 @@
 let db;
 let dbReq = indexedDB.open('myDatabase', 2);
 let isEditMode = false;
+let editedKey;
 
 dbReq.onupgradeneeded = function (event) {
     db = event.target.result;
@@ -151,6 +152,7 @@ function editCustomerShowData(client) {
         if (cursor) {
             if (cursor.value.timestamp == client.timestamp) {
                 isEditMode = true;
+                editedKey = cursor.key;
                 let firstName = document.getElementById('firstName');
                 let lastName = document.getElementById('lastName');
                 let age = document.getElementById('clientAge');
