@@ -95,7 +95,11 @@ function displayCustomers(clients) {
             deleteCustomer(element);
         });
 
+        let editTile = document.createElement("button");
+        editTile.innerText = 'Edit'
         customerList.appendChild(clientTile);
+        customerList.appendChild(editTile);
+        customerList.appendChild(document.createElement("br"));
     });
 }
 
