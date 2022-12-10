@@ -44,6 +44,7 @@ function submitCustomerFromButton() {
     lastName.value = '';
     age.value = '';
     isEditMode = false;
+    document.getElementById('submitButton').innerText = 'Add Customer';
 }
 
 function editCustomer(db, firstName, lastName, age) {
@@ -185,6 +186,8 @@ function editCustomerShowData(client) {
                 firstName.value = client.firstName;
                 lastName.value = client.lastName;
                 age.value = client.age;
+
+                document.getElementById('submitButton').innerText = 'Edit Customer';
             } else {
                 cursor.continue();
             }
