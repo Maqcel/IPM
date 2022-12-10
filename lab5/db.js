@@ -31,12 +31,16 @@ function submitCustomerFromButton() {
     let lastName = document.getElementById('lastName');
     let age = document.getElementById('clientAge');
 
-    addCustomer(db, firstName.value, lastName.value, age.value)
-
-    firstName.value = '';
-    lastName.value = '';
-    age.value = '';
-    isEditMode = false;
+    if (isEditMode) {
+        console.log('Editing customer');
+    } else {
+        console.log('Creating customer');
+        addCustomer(db, firstName.value, lastName.value, age.value)
+        firstName.value = '';
+        lastName.value = '';
+        age.value = '';
+        isEditMode = false;
+    }
 }
 
 function addCustomer(db, firstName, lastName, age) {
@@ -98,6 +102,7 @@ function displayCustomers(clients) {
         });
 
         let editTile = document.createElement("button");
+        editTile.setAttribute('id', `${element.timestamp}/edit`);
         editTile.innerText = 'Edit'
 
         editTile.addEventListener('click', function handleClick(_) {
@@ -124,6 +129,7 @@ function deleteCustomer(client) {
                 console.log(key, value);
                 store.delete(key);
                 document.getElementById(client.timestamp).remove();
+                document.getElementById(`${client.timestamp}/edit`).remove();
             } else {
                 cursor.continue();
             }
