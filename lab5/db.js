@@ -34,9 +34,10 @@ function submitCustomerFromButton() {
 
     if (isEditMode) {
         console.log('Editing customer');
+        editCustomer(db, firstName.value, lastName.value, age.value);
     } else {
         console.log('Creating customer');
-        addCustomer(db, firstName.value, lastName.value, age.value)
+        addCustomer(db, firstName.value, lastName.value, age.value);
     }
 
     firstName.value = '';
@@ -46,7 +47,10 @@ function submitCustomerFromButton() {
 }
 
 function editCustomer(db, firstName, lastName, age) {
+    let transaction = db.transaction(['clients'], 'readwrite');
+    let store = transaction.objectStore('clients');
 
+    store.delete(editedKey);
 }
 
 function addCustomer(db, firstName, lastName, age) {
@@ -117,7 +121,10 @@ function displayCustomers(clients) {
 
         customerList.appendChild(clientTile);
         customerList.appendChild(editTile);
-        customerList.appendChild(document.createElement("br"));
+
+        let newLineTile = document.createElement("br");
+        newLineTile.setAttribute('id', `${element.timestamp}/newLine`);
+        customerList.appendChild(newLineTile);
     });
 }
 
@@ -136,6 +143,7 @@ function deleteCustomer(client) {
                 store.delete(key);
                 document.getElementById(client.timestamp).remove();
                 document.getElementById(`${client.timestamp}/edit`).remove();
+                document.getElementById(`${client.timestamp}/newLine`).remove();
             } else {
                 cursor.continue();
             }
