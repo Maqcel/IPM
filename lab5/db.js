@@ -66,6 +66,8 @@ function editCustomer(db, firstName, lastName, age) {
             }
         }
     };
+
+    document.location.reload();
 }
 
 function addCustomer(db, firstName, lastName, age) {
