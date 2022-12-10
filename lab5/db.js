@@ -1,5 +1,6 @@
 let db;
 let dbReq = indexedDB.open('myDatabase', 2);
+let isEditMode = false;
 
 dbReq.onupgradeneeded = function (event) {
     db = event.target.result;
@@ -97,6 +98,11 @@ function displayCustomers(clients) {
 
         let editTile = document.createElement("button");
         editTile.innerText = 'Edit'
+
+        editTile.addEventListener('click', function handleClick(_) {
+            editCustomerShowData(element);
+        });
+
         customerList.appendChild(clientTile);
         customerList.appendChild(editTile);
         customerList.appendChild(document.createElement("br"));
@@ -117,6 +123,22 @@ function deleteCustomer(client) {
                 console.log(key, value);
                 store.delete(key);
                 document.getElementById(client.timestamp).remove();
+            } else {
+                cursor.continue();
+            }
+        }
+    };
+}
+function editCustomerShowData(client) {
+    var transaction = db.transaction(["clients"], "readwrite");
+    var store = transaction.objectStore("clients");
+
+    var request = store.openCursor();
+    request.onsuccess = function () {
+        let cursor = request.result;
+        if (cursor) {
+            if (cursor.value.timestamp == client.timestamp) {
+                isEditMode = true;
             } else {
                 cursor.continue();
             }
