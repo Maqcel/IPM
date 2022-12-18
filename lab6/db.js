@@ -123,16 +123,16 @@ function getCustomers(db) {
 
 function displayCustomers(clients) {
     let customerList = document.getElementById('customers');
-    customerList.innerHTML = "";
+    // customerList.innerHTML = "";
 
     //Head
-    document.getElementById('customers').innerHTML = "<td>Name</td><td>Last name</td><td>Age</td>";
+    document.getElementById('customersInfo').innerHTML = "<td>Name</td><td>Last name</td><td>Age</td>";
 
     var tableBody = document.getElementById("customersBody");
 
     clients.forEach((element) => {
         var clientTile = document.createElement("tbody");
-        clientTile.setAttribute('id', element.timestamp);
+        // clientTile.setAttribute('id', element.timestamp);
         // clientTile.innerHTML = 'Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}';
 
         [element.firstName, element.lastName, element.age].forEach((text) => {
@@ -158,7 +158,7 @@ function displayCustomers(clients) {
 
         clientTile.appendChild(deleteButton);
         clientTile.appendChild(editButton);
-        // tableBody.appendChild(clientTile);
+        tableBody.appendChild(clientTile);
 
 
         // customerList.appendChild(deleteButton);
