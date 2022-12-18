@@ -161,11 +161,9 @@ function displayCustomers(clients) {
 
 function _displayFilteringFields() {
     var filteringBody = document.getElementById('filteringBody');
-    _createFilterTextField('firstNameFilter', filteringBody, _handleFilteringOnName);
+    _createFilterTextField('nameFilter', filteringBody, _handleFilteringOnName);
     _createFilterTextField('lastNameFilter', filteringBody, _handleFilteringOnLastName);
     _createFilterTextField('ageFilter', filteringBody, _handleFilteringOnAge);
-
-
 }
 
 function _createFilterTextField(id, ref, onInputHandler) {
@@ -177,15 +175,34 @@ function _createFilterTextField(id, ref, onInputHandler) {
 }
 
 function _handleFilteringOnName(input) {
-
+    if (!input.target.value.length == 0) {
+        document.getElementById('lastNameFilter').disabled = true;
+        document.getElementById('ageFilter').disabled = true;
+    } else {
+        document.getElementById('lastNameFilter').removeAttribute('disabled')
+        document.getElementById('ageFilter').removeAttribute('disabled')
+    }
 }
 
 function _handleFilteringOnLastName(input) {
-
+    console.log();
+    if (!input.target.value.isEmpty) {
+        document.getElementById('nameFilter').disabled = true;
+        document.getElementById('ageFilter').disabled = true;
+    } else {
+        document.getElementById('nameFilter').removeAttribute('disabled')
+        document.getElementById('ageFilter').removeAttribute('disabled')
+    }
 }
 
 function _handleFilteringOnAge(input) {
-
+    if (!input.target.value.isEmpty) {
+        document.getElementById('lastNameFilter').disabled = true;
+        document.getElementById('nameFilter').disabled = true;
+    } else {
+        document.getElementById('lastNameFilter').removeAttribute('disabled')
+        document.getElementById('nameFilter').removeAttribute('disabled')
+    }
 }
 
 function _addSection(text, ref) {
