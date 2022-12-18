@@ -342,6 +342,7 @@ function generateCustomer() {
 
 function showClearButton() {
     let clearDiv = document.getElementById('cancelEdit');
+    document.getElementById(cancelEdit)?.remove();
 
     if (isEditMode) {
         let clearEdit = document.createElement("button");
