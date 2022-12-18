@@ -161,9 +161,12 @@ function displayCustomers(clients) {
 
 function _displayFilteringFields() {
     var filteringBody = document.getElementById('filteringBody');
-    _createFilterTextField('nameFilter', filteringBody, _handleFilteringOnName);
-    _createFilterTextField('lastNameFilter', filteringBody, _handleFilteringOnLastName);
-    _createFilterTextField('ageFilter', filteringBody, _handleFilteringOnAge);
+    if (!filteringBody.firstChild) {
+        _createFilterTextField('nameFilter', filteringBody, _handleFilteringOnName);
+        _createFilterTextField('lastNameFilter', filteringBody, _handleFilteringOnLastName);
+        _createFilterTextField('ageFilter', filteringBody, _handleFilteringOnAge);
+        document.getElementById('ageFilter').setAttribute('type', 'number');
+    }
 }
 
 function _createFilterTextField(id, ref, onInputHandler) {
@@ -185,8 +188,7 @@ function _handleFilteringOnName(input) {
 }
 
 function _handleFilteringOnLastName(input) {
-    console.log();
-    if (!input.target.value.isEmpty) {
+    if (!input.target.value.length == 0) {
         document.getElementById('nameFilter').disabled = true;
         document.getElementById('ageFilter').disabled = true;
     } else {
@@ -196,7 +198,7 @@ function _handleFilteringOnLastName(input) {
 }
 
 function _handleFilteringOnAge(input) {
-    if (!input.target.value.isEmpty) {
+    if (!input.target.value.length == 0) {
         document.getElementById('lastNameFilter').disabled = true;
         document.getElementById('nameFilter').disabled = true;
     } else {
