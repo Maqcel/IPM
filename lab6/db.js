@@ -133,7 +133,7 @@ function displayCustomers(clients) {
         clientTile.setAttribute('id', element.timestamp);
 
         [element.firstName, element.lastName, element.age].forEach((text) => {
-            addSection(text, clientTile);
+            _addSection(text, clientTile);
         });
 
 
@@ -161,20 +161,34 @@ function displayCustomers(clients) {
 
 function _displayFilteringFields() {
     var filteringBody = document.getElementById('filteringBody');
-    _createFilterTextField('firstNameFilter', filteringBody);
-    _createFilterTextField('lastNameFilter', filteringBody);
-    _createFilterTextField('ageFilter', filteringBody);
+    _createFilterTextField('firstNameFilter', filteringBody, _handleFilteringOnName);
+    _createFilterTextField('lastNameFilter', filteringBody, _handleFilteringOnLastName);
+    _createFilterTextField('ageFilter', filteringBody, _handleFilteringOnAge);
+
 
 }
 
-function _createFilterTextField(id, ref) {
+function _createFilterTextField(id, ref, onInputHandler) {
     var textField = document.createElement('input');
     textField.setAttribute('id', id);
     textField.setAttribute('type', 'text');
+    textField.addEventListener('input', onInputHandler)
     ref.appendChild(textField)
 }
 
-function addSection(text, ref) {
+function _handleFilteringOnName(input) {
+
+}
+
+function _handleFilteringOnLastName(input) {
+
+}
+
+function _handleFilteringOnAge(input) {
+
+}
+
+function _addSection(text, ref) {
     var section = document.createElement("td");
     section.textContent = text;
     ref.appendChild(section);
