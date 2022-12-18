@@ -84,10 +84,9 @@ function addCustomer(db, firstName, lastName, age) {
 
     // Success
     transaction.oncomplete = function () {
-        console.log('Customer: ', firstName, ' ', lastName, ' aged: ', age, ' added\n')
+        alert('Customer: ' + firstName + ' ' + lastName + ' aged: ' + age + ' added')
 
-        // Just add this customer for view
-        displayCustomers([customer]);
+        getCustomers(db);
     }
 
     // Failed
