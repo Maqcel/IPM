@@ -132,7 +132,7 @@ function displayCustomers(clients) {
 
     clients.forEach((element) => {
         var clientTile = document.createElement("tbody");
-        // clientTile.setAttribute('id', element.timestamp);
+        clientTile.setAttribute('id', element.timestamp);
         // clientTile.innerHTML = 'Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}';
 
         [element.firstName, element.lastName, element.age].forEach((text) => {
@@ -159,14 +159,6 @@ function displayCustomers(clients) {
         clientTile.appendChild(deleteButton);
         clientTile.appendChild(editButton);
         tableBody.appendChild(clientTile);
-
-
-        // customerList.appendChild(deleteButton);
-        // customerList.appendChild(editTile);
-
-        // let newLineTile = document.createElement("br");
-        // newLineTile.setAttribute('id', `${element.timestamp}/newLine`);
-        // customerList.appendChild(newLineTile);
     });
 }
 
@@ -190,8 +182,6 @@ function deleteCustomer(client) {
                 console.log(key, value);
                 store.delete(key);
                 document.getElementById(client.timestamp).remove();
-                document.getElementById(`${client.timestamp}/edit`).remove();
-                document.getElementById(`${client.timestamp}/newLine`).remove();
             } else {
                 cursor.continue();
             }
