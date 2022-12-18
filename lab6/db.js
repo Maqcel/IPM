@@ -123,31 +123,57 @@ function getCustomers(db) {
 
 function displayCustomers(clients) {
     let customerList = document.getElementById('customers');
+    customerList.innerHTML = "";
+
+    //Head
+    document.getElementById('customers').innerHTML = "<td>Name</td><td>Last name</td><td>Age</td>";
+
+    var tableBody = document.getElementById("customersBody");
 
     clients.forEach((element) => {
-        let clientTile = document.createElement("button");
+        var clientTile = document.createElement("tbody");
         clientTile.setAttribute('id', element.timestamp);
-        clientTile.innerText = `Delete Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}`;
+        // clientTile.innerHTML = 'Client\n\n Name: ${element.firstName}\n Surname: ${element.lastName}\n Age: ${element.age}';
 
-        clientTile.addEventListener('click', function handleClick(_) {
+        [element.firstName, element.lastName, element.age].forEach((text) => {
+            addSection(text, clientTile);
+        });
+
+
+        let deleteButton = document.createElement("button");
+        deleteButton.setAttribute('id', `${element.timestamp}/delete`);
+        deleteButton.innerText = `Delete Client`;
+
+        deleteButton.addEventListener('click', function handleClick(_) {
             deleteCustomer(element);
         });
 
-        let editTile = document.createElement("button");
-        editTile.setAttribute('id', `${element.timestamp}/edit`);
-        editTile.innerText = 'Edit'
+        let editButton = document.createElement("button");
+        editButton.setAttribute('id', `${element.timestamp}/edit`);
+        editButton.innerText = 'Edit'
 
-        editTile.addEventListener('click', function handleClick(_) {
+        editButton.addEventListener('click', function handleClick(_) {
             editCustomerShowData(element);
         });
 
-        customerList.appendChild(clientTile);
-        customerList.appendChild(editTile);
+        clientTile.appendChild(deleteButton);
+        clientTile.appendChild(editButton);
+        // tableBody.appendChild(clientTile);
 
-        let newLineTile = document.createElement("br");
-        newLineTile.setAttribute('id', `${element.timestamp}/newLine`);
-        customerList.appendChild(newLineTile);
+
+        // customerList.appendChild(deleteButton);
+        // customerList.appendChild(editTile);
+
+        // let newLineTile = document.createElement("br");
+        // newLineTile.setAttribute('id', `${element.timestamp}/newLine`);
+        // customerList.appendChild(newLineTile);
     });
+}
+
+function addSection(text, ref) {
+    var section = document.createElement("td");
+    section.textContent = text;
+    ref.appendChild(section);
 }
 
 function deleteCustomer(client) {
