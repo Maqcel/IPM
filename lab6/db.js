@@ -127,6 +127,7 @@ function displayCustomers(clients) {
     _displayFilteringFields();
 
     var tableBody = document.getElementById("customersBody");
+    tableBody.innerHTML = '';
 
     clients.forEach((element) => {
         var clientTile = document.createElement("tbody");
@@ -195,6 +196,7 @@ function _handleFilteringOnLastName(input) {
         document.getElementById('nameFilter').removeAttribute('disabled')
         document.getElementById('ageFilter').removeAttribute('disabled')
     }
+
 }
 
 function _handleFilteringOnAge(input) {
@@ -204,6 +206,30 @@ function _handleFilteringOnAge(input) {
     } else {
         document.getElementById('lastNameFilter').removeAttribute('disabled')
         document.getElementById('nameFilter').removeAttribute('disabled')
+    }
+
+    let transaction = db.transaction(['clients'], 'readonly');
+    let store = transaction.objectStore('clients');
+
+    let index = store.index('timestamp');
+
+    let getRequest = index.openCursor(null, 'next');
+    let allClients = [];
+
+    getRequest.onsuccess = function (event) {
+        let cursor = event.target.result;
+        if (cursor != null) {
+            if (cursor.value.age == input.target.value || input.target.value.length == 0) {
+                allClients.push(cursor.value);
+            }
+            cursor.continue();
+        } else {
+            displayCustomers(allClients);
+        }
+    }
+
+    getRequest.onerror = function (event) {
+        alert('Error in get request ' + event.target.errorCode);
     }
 }
 
