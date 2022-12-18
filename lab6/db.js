@@ -124,6 +124,7 @@ function getCustomers(db) {
 function displayCustomers(clients) {
     //Head
     document.getElementById('customersInfo').innerHTML = "<td>Name</td><td>Last name</td><td>Age</td>";
+    _displayFilteringFields();
 
     var tableBody = document.getElementById("customersBody");
 
@@ -156,6 +157,21 @@ function displayCustomers(clients) {
         clientTile.appendChild(editButton);
         tableBody.appendChild(clientTile);
     });
+}
+
+function _displayFilteringFields() {
+    var filteringBody = document.getElementById('filteringBody');
+    _createFilterTextField('firstNameFilter', filteringBody);
+    _createFilterTextField('lastNameFilter', filteringBody);
+    _createFilterTextField('ageFilter', filteringBody);
+
+}
+
+function _createFilterTextField(id, ref) {
+    var textField = document.createElement('input');
+    textField.setAttribute('id', id);
+    textField.setAttribute('type', 'text');
+    ref.appendChild(textField)
 }
 
 function addSection(text, ref) {
