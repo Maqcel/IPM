@@ -186,6 +186,30 @@ function _handleFilteringOnName(input) {
         document.getElementById('lastNameFilter').removeAttribute('disabled')
         document.getElementById('ageFilter').removeAttribute('disabled')
     }
+
+    let transaction = db.transaction(['clients'], 'readonly');
+    let store = transaction.objectStore('clients');
+
+    let index = store.index('timestamp');
+
+    let getRequest = index.openCursor(null, 'next');
+    let allClients = [];
+
+    getRequest.onsuccess = function (event) {
+        let cursor = event.target.result;
+        if (cursor != null) {
+            if (cursor.value.firstName.toLowerCase().includes(input.target.value.toLowerCase()) || input.target.value.length == 0) {
+                allClients.push(cursor.value);
+            }
+            cursor.continue();
+        } else {
+            displayCustomers(allClients);
+        }
+    }
+
+    getRequest.onerror = function (event) {
+        alert('Error in get request ' + event.target.errorCode);
+    }
 }
 
 function _handleFilteringOnLastName(input) {
